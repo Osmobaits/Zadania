@@ -1,1 +1,98 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.task-list {
+    display: flex;
+    flex-wrap: wrap;
+   /* justify-content: space-between; */ /* Jeśli chcesz równomiernie rozłożyć */
+}
+
+.task-item {
+    width: 48%; /* Prawie 50%, aby zostawić trochę miejsca */
+    margin: 1%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+h2 {
+     margin-top: 30px; /* Większy odstęp nad "Dodaj Zadanie" */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .task-item {
+        width: 98%; /* Zmień na ~100% na mniejszych ekranach */
+    }
+}
+form {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="datetime-local"],
+form textarea,
+form select {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%; /* Pełna szerokość na mniejszych ekranach */
+}
+form select{
+      flex: 1;
+     min-width: 150px; /* Minimalna szerokość dla selecta */
+
+}
+form input[type="text"],
+form textarea,
+form input[type="datetime-local"]
+ {
+    flex: 1; /* Zajmują dostępną przestrzeń */
+    margin-right: 10px; /* Odstęp między elementami */
+}
+form button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; /* Pełna szerokość na mniejszych ekranach */
+
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+@media (min-width: 768px) { /* Dla większych ekranów */
+    form input[type="text"],
+    form textarea,
+    form input[type="datetime-local"],
+    form select,
+    form button {
+        width: auto; /* Automatyczna szerokość */
+
+    }
+    form button{
+      max-width: 200px;
+    }
+}
