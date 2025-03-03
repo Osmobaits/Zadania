@@ -7,3 +7,6 @@ python-dotenv
 gunicorn  # Dodaj Gunicorn
 flask_marshmallow
 psycopg2
+Flask-Migrate
+Flask-Login  # Dodaj
+bcrypt       # Dodaj
