@@ -6,3 +6,4 @@ marshmallow-sqlalchemy
 python-dotenv
 gunicorn  # Dodaj Gunicorn
 flask_marshmallow
+psycopg2
