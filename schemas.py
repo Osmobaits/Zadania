@@ -6,7 +6,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
         load_instance = True
-        exclude = ('password',)  # Nie wysyłaj hasła!
+        exclude = ('password_hash',)  # Poprawione: wyklucz password_HASH
         include_fk = True
 
 class TaskSchema(ma.SQLAlchemyAutoSchema):
