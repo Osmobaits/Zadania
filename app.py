@@ -6,8 +6,7 @@ from config import Config
 from models import Task, User
 from flask_migrate import Migrate
 from flask_login import login_user, logout_user, login_required, current_user
-import os  # Importuj moduł os
-
+import os
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -32,7 +31,6 @@ def create_app(config_class=Config):
     def index():
         users = User.query.all()
         return render_template('task_list.html', users=users, current_user=current_user)
-
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
@@ -85,24 +83,36 @@ def create_app(config_class=Config):
             return redirect(url_for('login'))
 
         return render_template('register.html')
-    # --- Funkcja do tworzenia administratora ---
+
     def create_admin():
         with app.app_context():
-            admin_username = os.environ.get('ADMIN_USERNAME', 'admin')  # Pobierz z zmiennej środowiskowej lub użyj domyślnej
-            admin_password = os.environ.get('ADMIN_PASSWORD', 'admin')  # Pobierz z zmiennej środowiskowej lub użyj domyślnej
-            admin_color = os.environ.get('ADMIN_COLOR', '#ff0000') #Pobierz z env lub domyślny
+            admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
+            admin_password = os.environ.get('ADMIN_PASSWORD', 'admin')
+            admin_color = os.environ.get('ADMIN_COLOR', '#ff0000')
 
             existing_admin = User.query.filter_by(username=admin_username).first()
-            if not existing_admin: # Sprawdź, czy administrator już istnieje
+            if not existing_admin:
                 admin = User(username=admin_username, color=admin_color, is_admin=True)
                 admin.set_password(admin_password)
                 db.session.add(admin)
                 db.session.commit()
                 print(f"Created admin user: {admin_username}")
             else:
-                 print(f"Admin user '{admin_username}' already exists.")
+                print(f"Admin user '{admin_username}' already exists.")
 
-    create_admin() # Wywołaj funkcję tworzącą administratora
+    create_admin()
+
+    # --- Automatyczne stosowanie migracji (ostrożnie!) ---
+    with app.app_context():
+        try:
+            print("Applying migrations...")
+            from flask_migrate import upgrade
+            upgrade()
+            print("Migrations applied successfully.")
+        except Exception as e:
+            print(f"Error applying migrations: {e}")
+            # Rozważ, co zrobić w przypadku błędu.  Możesz np. przerwać działanie aplikacji:
+            # raise e
 
     return app
 
