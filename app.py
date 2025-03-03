@@ -102,7 +102,6 @@ def create_app(config_class=Config):
 
     create_admin()
 
-    # --- Automatyczne stosowanie migracji (ostrożnie!) ---
     with app.app_context():
         try:
             print("Applying migrations...")
@@ -111,8 +110,6 @@ def create_app(config_class=Config):
             print("Migrations applied successfully.")
         except Exception as e:
             print(f"Error applying migrations: {e}")
-            # Rozważ, co zrobić w przypadku błędu.  Możesz np. przerwać działanie aplikacji:
-            # raise e
 
     return app
 
