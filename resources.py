@@ -4,6 +4,8 @@ from models import Task, User
 from schemas import TaskSchema, UserSchema
 from extensions import db
 from datetime import datetime
+from flask_login import login_required, current_user  # Importuj
+
 
 task_schema = TaskSchema()
 tasks_schema = TaskSchema(many=True)
@@ -11,10 +13,12 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 class TaskListResource(Resource):
+    @login_required # Zabezpiecz
     def get(self):
         tasks = Task.query.all()
         return tasks_schema.dump(tasks)
 
+    @login_required # Zabezpiecz
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('title', type=str, required=True, help='Title is required')
@@ -36,10 +40,12 @@ class TaskListResource(Resource):
         return task_schema.dump(new_task), 201
 
 class TaskResource(Resource):
+    @login_required # Zabezpiecz
     def get(self, task_id):
         task = Task.query.get_or_404(task_id)
         return task_schema.dump(task)
 
+    @login_required # Zabezpiecz
     def put(self, task_id):
         task = Task.query.get_or_404(task_id)
         parser = reqparse.RequestParser()
@@ -63,13 +69,18 @@ class TaskResource(Resource):
         db.session.commit()
         return task_schema.dump(task)
 
+    @login_required # Zabezpiecz
     def delete(self, task_id):
         task = Task.query.get_or_404(task_id)
         db.session.delete(task)
         db.session.commit()
         return '', 204
 
-class UserListResource(Resource): #Potrzebne do pobierania listy userów przez API
+class UserListResource(Resource):
+    @login_required #Zabezpiecz, opcjonalnie, ale warto
     def get(self):
+        #Zabezpieczenie by admin mógł zobaczyć userów
+        if not current_user.is_admin:
+            return {'message': 'Unauthorized'}, 403
         users = User.query.all()
         return users_schema.dump(users)
