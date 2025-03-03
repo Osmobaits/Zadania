@@ -3,15 +3,6 @@
 {% block content %}
     <h1>Zarządzanie Zadaniami</h1>
 
-     <h2>Dodaj Użytkownika (Tymczasowe)</h2>
-    <form action="{{ url_for('add_user') }}" method="post">
-        <input type="text" name="username" placeholder="Nazwa użytkownika" required>
-        <input type="password" name="password" placeholder="Hasło" required>
-        <input type="color" name="color" value="#ffffff">
-        <button type="submit">Dodaj</button>
-    </form>
-
-
     <h2>Lista Zadań</h2>
     <div class="task-list" id="task-list">
         </div>
