@@ -5,3 +5,4 @@ Flask-SQLAlchemy
 marshmallow-sqlalchemy
 python-dotenv
 gunicorn  # Dodaj Gunicorn
+flask_marshmallow
